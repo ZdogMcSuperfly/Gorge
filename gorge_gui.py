@@ -10,7 +10,7 @@ root.geometry("1280x720")
 #tkinter GUI
 #Search options frame and buttons
 search_options_frame = Frame(root)
-search_options_frame.grid(row=0,column=0,sticky="W")
+search_options_frame.grid(row=0,column=0)
 
 folder_search_button = Button(search_options_frame,text="Folder search")
 folder_search_button.grid(row=0,column=0)
@@ -20,6 +20,12 @@ tag_search_button.grid(row=0,column=1)
 
 refresh_button = Button(search_options_frame,text="Refresh")
 refresh_button.grid(row=0,column=2)
+
+open_database_button = Button(search_options_frame,text="Open DB")
+open_database_button.grid(row=0,column=3)
+
+new_database_button = Button(search_options_frame,text="New DB",width=5)
+new_database_button.grid(row=0,column=4)
 
 #Search query and resaults frame
 search_resaults_frame = Frame(root)
@@ -47,9 +53,6 @@ search_tree.insert("",END,values=("sdfsd","dsf"))
 
 search_tree.grid(row=1,column=0)
 
-separator = ttk.Separator(search_resaults_frame, orient='vertical')
-separator.grid(row=1,column=1)
-
 #Currently selected data's name
 data_name_label = Label(root,text="/testfolder/testy2/sfsdf.png")
 data_name_label.grid(row=0,column=1,sticky="NESW")
@@ -69,7 +72,7 @@ current_tags_listbox.insert(5,"Ruby")
 current_tags_listbox.grid(row=0,column=0,sticky="N")
 
 #Data preview
-data_image_src = Image.open("testimage.png")
+data_image_src = Image.open("no_preview.png")
 resize_image = data_image_src.resize((640,640))
 data_image = ImageTk.PhotoImage(resize_image)
 
