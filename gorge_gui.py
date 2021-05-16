@@ -8,7 +8,7 @@ import os
 def main():
     root = Tk()
     root.geometry("1280x720")
-    root.title("Gorge - 'Datbase name' - /home/zdog/Projects/_GIT/Gorge/testhord")
+    root.title("Gorge - 'Datbase name' - "+os.path.dirname(os.path.abspath(__file__))+"/data/")
     draw_buttons(root)
     draw_search_frame(root)
     draw_contents(root)
@@ -47,7 +47,7 @@ def draw_search_frame(root):
     search_query_label.grid(row=0, column=0)
 
     # Search results treeview
-    search_tree = ttk.Treeview(search_results_frame, columns=("N", "T"), show="headings", height=6)
+    search_tree = ttk.Treeview(search_results_frame, columns=("N", "T"), show="headings", height=len(glob.glob("data/*")))
 
     search_tree.column("N", width=360, minwidth=360, stretch=NO)
     search_tree.column("T", width=64, minwidth=64, stretch=NO)
@@ -55,7 +55,7 @@ def draw_search_frame(root):
     search_tree.heading("N", text="Name")
     search_tree.heading("T", text="Type")
 
-    files_in_dir = glob.glob("files/*")
+    files_in_dir = glob.glob("data/*")
     for file in files_in_dir:
         filename = file.split("/")[-1]
         #fills the type column with weather its a file or folder
