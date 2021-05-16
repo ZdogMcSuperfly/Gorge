@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 import glob
+import magic # pip install python-magic
 
 
 def main():
@@ -28,11 +29,12 @@ def draw_buttons(root):
     refresh_button = Button(search_options_frame, text="Refresh")
     refresh_button.grid(row=0, column=2)
 
-    open_database_button = Button(search_options_frame, text="Open DB")
-    open_database_button.grid(row=0, column=3)
+    #Why worry about multiple database files when we dont even have one working :P
+    #open_database_button = Button(search_options_frame, text="Open DB")
+    #open_database_button.grid(row=0, column=3)
 
-    new_database_button = Button(search_options_frame, text="New DB", width=5)
-    new_database_button.grid(row=0, column=4)
+    #new_database_button = Button(search_options_frame, text="New DB", width=5)
+    #new_database_button.grid(row=0, column=4)
 
 
 def draw_search_frame(root):
@@ -47,8 +49,8 @@ def draw_search_frame(root):
     # Search results treeview
     search_tree = ttk.Treeview(search_results_frame, columns=("N", "T"), show="headings", height=6)
 
-    search_tree.column("N", width=360, minwidth=360, stretch=NO)
-    search_tree.column("T", width=64, minwidth=64, stretch=NO)
+    search_tree.column("N", width=160, minwidth=160, stretch=NO)
+    search_tree.column("T", width=164, minwidth=164, stretch=NO)
 
     search_tree.heading("N", text="Name")
     search_tree.heading("T", text="Type")
@@ -57,7 +59,8 @@ def draw_search_frame(root):
     for file in files_in_dir:
         filename = file.split("/")[-1]
         parts = filename.split(".")
-        extension = "" if len(parts) <= 1 else parts[-1]
+        m = magic.open(magic.MAGIC_MIME) #checks file extension
+        extension = m.file(file) if len(parts) <= 1 else parts[-1] #fills the type column with the file extension
         search_tree.insert("", END, values=(filename, extension))
 
     search_tree.grid(row=1, column=0)
