@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 import glob
-import magic # pip install python-magic
+import os
 
 
 def main():
@@ -49,8 +49,8 @@ def draw_search_frame(root):
     # Search results treeview
     search_tree = ttk.Treeview(search_results_frame, columns=("N", "T"), show="headings", height=6)
 
-    search_tree.column("N", width=160, minwidth=160, stretch=NO)
-    search_tree.column("T", width=164, minwidth=164, stretch=NO)
+    search_tree.column("N", width=360, minwidth=360, stretch=NO)
+    search_tree.column("T", width=64, minwidth=64, stretch=NO)
 
     search_tree.heading("N", text="Name")
     search_tree.heading("T", text="Type")
@@ -58,9 +58,11 @@ def draw_search_frame(root):
     files_in_dir = glob.glob("files/*")
     for file in files_in_dir:
         filename = file.split("/")[-1]
-        parts = filename.split(".")
-        m = magic.open(magic.MAGIC_MIME) #checks file extension
-        extension = m.file(file) if len(parts) <= 1 else parts[-1] #fills the type column with the file extension
+        #fills the type column with weather its a file or folder
+        if os.path.isdir(file) == True:
+            extension = "Folder" 
+        else:
+            extension = "File"
         search_tree.insert("", END, values=(filename, extension))
 
     search_tree.grid(row=1, column=0)
